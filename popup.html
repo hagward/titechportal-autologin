@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>OCW-i Auto-login</title>
+        <title>Titech Portal Auto-login</title>
         <style>
         body {
             font-family: Segoe UI, Tahoma, sans-serif;
@@ -9,19 +9,25 @@
         }
 
         textarea {
-            width: 100px;
-            height: 80px;
+            width: 200px;
+            height: 150px;
             resize: none;
+        }
+
+        #matrixErrorSpan {
+            color: red;
+            visibility: hidden;
         }
         </style>
         <script src="popup.js"></script>
     </head>
     <body>
         <fieldset>
-            <legend>OCWi matrix</legend>
+            <legend>Login Matrix</legend>
             <textarea id="matrixTextArea"></textarea>
             <button id="saveButton" disabled="true">Save</button>
             <button id="autoFillButton" disabled="true">Auto-fill</button>
+            <span id="matrixErrorSpan">Error!</span>
         </fieldset>
     </body>
 </html>

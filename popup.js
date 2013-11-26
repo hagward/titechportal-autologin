@@ -8,45 +8,69 @@
 1 2 3 4 5 6 7 8 9 0
 */
 
-function parseMatrix(matrixStr) {
-    // matrix size is 10 x 7
+// matrix size is 10 x 7
+
+function stringToMatrix(str) {
+    /*
+    var tokens = str.split();
+
+    if (tokens.length != 70)
+        return null;
 
     var m = [];
-    for (var i = 0; i < 7; i++)
-        m.push(matrixStr.substr(i*20).split(/\s+/));
+    for (var i = 0; i < 7; i++) {
+        m.push([]);
+        for (var j = 0; j < 10; j++)
+            m[i].push(
     return m;
+    */
 }
 
 function matrixToString(matrix) {
-    console.log(matrix[0].join(''));
+    var str = '';
+    for (var i = 0; i < matrix.length; i++) {
+        str += matrix[i];
+        str += (i % 10 == 9) ? '\n' : ' ';
+    }
+    return str;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     var matrixTextArea = document.getElementById('matrixTextArea');
     var saveButton = document.getElementById('saveButton');
     var autoFillButton = document.getElementById('autoFillButton');
+    var matrixErrorSpan = document.getElementById('matrixErrorSpan');
 
     var m;
 
     chrome.storage.sync.get('loginMatrix', function (result) {
         m = result.loginMatrix;
-        matrixTextArea.value = m.toString();
+        if (m) {
+            matrixTextArea.value = matrixToString(m);
+            console.log('loaded matrix from storage');
+        }
 
         saveButton.disabled = false;
         autoFillButton.disabled = false;
-
-        console.log('loaded matrix from storage');
-        matrixToString(m);
     });
 
-    saveButton.addEventListener('click', function() {
-        m = parseMatrix(matrixTextArea.value);
+    saveButton.addEventListener('click', function () {
+        var tokens = matrixTextArea.value.split(/\s+/);
+        if (tokens.length != 70) {
+            matrixErrorSpan.style.visibility = 'visible';
+            console.log('matrix length: ' + tokens.length);
+            return;
+        }
+
+        m = tokens;
+
         chrome.storage.sync.set({'loginMatrix': m}, function () {
+            matrixErrorSpan.style.visibility = 'hidden';
             console.log('saved!');
         });
     });
 
-    autoFillButton.addEventListener('click', function() {
+    autoFillButton.addEventListener('click', function () {
         chrome.tabs.executeScript(null, {
             code: 'var m = ' + JSON.stringify(m)
         }, function() {
