@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+
+    "name": "OCW-i Auto-login",
+    "description": "No more matrix lookups!",
+    "version": "1.0",
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "https://portal.nap.gsic.titech.ac.jp/*",
+        "file:///D:/Dropbox/dev/web/ocwi-auto/test-site.html"
+    ],
+
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    }
+}
+
