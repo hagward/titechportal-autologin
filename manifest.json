@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "Titech Portal Auto-login",
-    "description": "No more tedious manual matrix lookups!",
+    "description": "No more tedious matrix lookups!",
     "version": "0.1",
     "options_page": "options.html",
 
