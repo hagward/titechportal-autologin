@@ -4,8 +4,13 @@
         <title>Auto-login options</title>
         <meta charset="UTF-8">
         <style>
+        body, input {
+            font-family: Segoe UI, Tahoma, sans-serif;
+            font-size: 1.1em;
+        }
         table { margin: 20px auto; }
-        input { width: 10px; }
+        td:first-child { padding-right: 8px; }
+        input[type="text"] { width: 1.1em; }
 
         #centeringDiv {
             text-align: center;
@@ -16,10 +21,10 @@
         <div id="centeringDiv">
             <table id="matrixTable">
             </table>
-            <button id="saveButton">Save and hide!</button>
-            <button id="editButton">Edit</button>
+            <input type="button" id="saveButton" value="Save">
+            <input type="button" id="editButton" value="Edit">
         </div>
-    </body>
+        </body>
 
     <script src="options.js"></script>
 

@@ -18,6 +18,8 @@ function createInputTable(table, rows, cols) {
             // Input field.
             else if (j != cols) {
                 elem = document.createElement('input');
+                elem.type = 'text';
+                elem.tabIndex = cols * rows - (cols * i + j);
                 inputs.push(elem);
             }
 
@@ -46,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             saveButton.disabled = true;
-            console.log('loaded matrix from storage');
         } else {
             inputs[inputs.length - 1].focus();
         }
@@ -61,8 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         chrome.storage.sync.set({'loginMatrix': m}, function () {
-            console.log('saved!');
-            console.log(m);
         });
         
         saveButton.disabled = true;
@@ -70,12 +69,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     editButton.addEventListener('click', function () {
-        for (var i = 0; i < inputs.length; i++)
+        for (var i = 0; i < inputs.length; i++) {
             inputs[i].disabled = !inputs[i].disabled;
+            inputs[i].value = (inputs[i].disabled)
+                ? '*'
+                : '';
+        }
 
         saveButton.disabled = !saveButton.disabled;
-
-        // This does not work...
         editButton.value = (saveButton.disabled)
             ? 'Edit'
             : 'Cancel';
@@ -83,4 +84,28 @@ document.addEventListener('DOMContentLoaded', function () {
         inputs[inputs.length - 1].focus();
     });
 });
+
+document.onkeypress = function(e) {
+    var kc = e.keyCode || e.which;
+    var elem = document.activeElement;
+
+    // Check if not in table.
+    if (elem.tabIndex <= 0 || elem.tabIndex > 70)
+        return;
+
+    elem = elem.parentNode;
+
+    // End of table row reached.
+    if (elem.nextSibling == null) {
+
+        // End of table reached.
+        if (elem.parentNode.nextSibling == null)
+            return;
+        
+        // Set elem to the first input cell in the next row.
+        elem = elem.parentNode.nextSibling.firstChild;
+    }
+
+    elem.nextSibling.firstChild.focus();
+}
 

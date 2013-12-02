@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, function() {
             chrome.tabs.executeScript(null, {file: 'content_script.js'});
         });
-        console.log('auto-filled!');
     });
 });
 

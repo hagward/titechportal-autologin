@@ -21,7 +21,5 @@ while (i < 3 && (found = regex.exec(source)) !== null) {
     i++;
 }
 
-alert('console!');
-
 document.getElementsByName('OK')[0].click();
 
