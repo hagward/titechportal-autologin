@@ -9,6 +9,7 @@ var inputs = [
 
 var i = 0;
 var found;
+
 while (i < 3 && (found = regex.exec(source)) !== null) {
     var x = found[1].charCodeAt(0) - 65;
     var y = parseInt(found[2], 10) - 1;

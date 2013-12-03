@@ -5,17 +5,21 @@
     "description": "No more tedious matrix lookups!",
     "version": "0.1",
     "options_page": "options.html",
+    "background": { "scripts": ["background.js"] },
+
+    "page_action": {
+        "default_icon": {
+            "19": "images/icon19.png",
+            "38": "images/icon38.png"
+        },
+        "default_title": "Titech Portal Auto-login"
+    },
 
     "permissions": [
         "tabs",
         "storage",
         "https://portal.nap.gsic.titech.ac.jp/*",
-        "file:///D:/Dropbox/dev/web/ocwi-auto/test-site.html"
-    ],
-
-    "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "popup.html"
-    }
+        "file:///C:/Users/Anders/Documents/GitHub/titechportal-autologin/test-site.html"
+    ]
 }
 
