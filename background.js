@@ -1,6 +1,5 @@
 var urlIdent = 'https://portal.nap.gsic.titech.ac.jp/GetAccess/Login'
              + '?Template=idg_key&AUTHMETHOD=IG';
-//var urlIdent = 'test-site.html';
 
 var m;
 
@@ -16,7 +15,6 @@ chrome.pageAction.onClicked.addListener(function (tab) {
     }, function() {
         chrome.tabs.executeScript(tab.id, {file: 'content_script.js'});
     });
-    console.log(m);
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {

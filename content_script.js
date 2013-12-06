@@ -14,13 +14,13 @@ while (i < 3 && (found = regex.exec(source)) !== null) {
     var x = found[1].charCodeAt(0) - 65;
     var y = parseInt(found[2], 10) - 1;
 
-    if (x < 7 && x >= 0 && y < 10 && y >= 0) {
+    if (x < 10 && x >= 0 && y < 7 && y >= 0)
         inputs[i].value = m[y * 10 + x];
-        console.log(i + ': ' + m[y * 10 + x]);
-    }
 
     i++;
 }
 
-document.getElementsByName('OK')[0].click();
+setTimeout(function () {
+    document.getElementsByName('OK')[0].click();
+}, 100);
 

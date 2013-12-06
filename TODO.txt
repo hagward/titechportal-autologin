@@ -1,9 +1,0 @@
-TODO:
-
-- make input of array more seamless (you should not have to type a whitespace
-  between every letter, only write uppercase letters etc.
-
-- you should be able to hide your matrix so other's can't snatch it.
-
-- auto-login without having to press "auto-fill".
-
