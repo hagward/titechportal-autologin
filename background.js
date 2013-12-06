@@ -7,6 +7,12 @@ chrome.storage.sync.get('loginMatrix', function (result) {
     m = result.loginMatrix;
 });
 
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    // For now there's only one data structure that is stored, so we can be
+    // quite sure that that's the one that has changed.
+    m = changes.loginMatrix.newValue;
+});
+
 chrome.pageAction.onClicked.addListener(function (tab) {
     if (!m) return;
 

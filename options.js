@@ -61,11 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
             inputs[i].value = '*';
         }
 
-        chrome.storage.sync.set({'loginMatrix': m}, function () {
-        });
+        chrome.storage.sync.set({'loginMatrix': m}, null);
         
         saveButton.disabled = true;
         editButton.disabled = false;
+        editButton.value = 'Edit';
     });
 
     editButton.addEventListener('click', function () {
