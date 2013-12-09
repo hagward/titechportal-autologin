@@ -16,6 +16,11 @@
         #centeringDiv {
             text-align: center;
         }
+        #errorDiv {
+            color: red;
+            font-style: italic;
+            visibility: hidden;
+        }
         </style>
     </head>
     <body>
@@ -25,6 +30,9 @@
             </table>
             <input type="button" id="saveButton" value="Save">
             <input type="button" id="editButton" value="Edit">
+            <div id="errorDiv">
+                You have to fill out the whole matrix before saving!
+            </div>
         </div>
     </body>
 

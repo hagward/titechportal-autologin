@@ -30,10 +30,18 @@ function createInputTable(table, rows, cols) {
     return inputs;
 }
 
+function allFilled(inputs) {
+    for (var i = 0; i < inputs.length; i++)
+        if (inputs[i].value.length == 0)
+            return false;
+    return true;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     var matrixTable = document.getElementById('matrixTable');
     var saveButton = document.getElementById('saveButton');
     var editButton = document.getElementById('editButton');
+    var errorDiv = document.getElementById('errorDiv');
 
     var inputs = createInputTable(matrixTable, 7, 10, false);
 
@@ -54,7 +62,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     saveButton.addEventListener('click', function () {
+        if (!allFilled(inputs)) {
+            errorDiv.style.visibility = 'visible';
+            return;
+        } else {
+            errorDiv.style.visibility = 'hidden';
+        }
+
+        // Reset the matrix before reading the new one.
+        // todo: don't reset
         m = [];
+
         for (var i = inputs.length - 1; i >= 0; i--) {
             m.push(inputs[i].value);
             inputs[i].disabled = true;
@@ -83,29 +101,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
         inputs[inputs.length - 1].focus();
     });
-});
 
-document.onkeypress = function(e) {
-    var kc = e.keyCode || e.which;
-    var elem = document.activeElement;
+    document.onkeypress = function(e) {
+        var kc = e.keyCode || e.which;
+        var elem = document.activeElement;
 
-    // Check if not in table.
-    if (elem.tabIndex <= 0 || elem.tabIndex > 70)
-        return;
-
-    elem = elem.parentNode;
-
-    // End of table row reached.
-    if (elem.nextSibling == null) {
-
-        // End of table reached.
-        if (elem.parentNode.nextSibling == null)
+        // Check if not in table.
+        if (elem.tabIndex <= 0 || elem.tabIndex > 70)
             return;
-        
-        // Set elem to the first input cell in the next row.
-        elem = elem.parentNode.nextSibling.firstChild;
-    }
 
-    elem.nextSibling.firstChild.focus();
-}
+        elem = elem.parentNode;
+
+        // End of table row reached.
+        if (elem.nextSibling == null) {
+
+            // End of table reached.
+            if (elem.parentNode.nextSibling == null)
+                return;
+            
+            // Set elem to the first input cell in the next row.
+            elem = elem.parentNode.nextSibling.firstChild;
+        }
+
+        elem.nextSibling.firstChild.focus();
+    }
+});
 
