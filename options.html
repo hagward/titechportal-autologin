@@ -16,11 +16,12 @@
         #centeringDiv {
             text-align: center;
         }
-        #errorDiv {
-            color: red;
+        #errorDiv, #successDiv {
             font-style: italic;
-            visibility: hidden;
+            display: none;
         }
+        #errorDiv { color: red; }
+        #successDiv { color: green; }
         </style>
     </head>
     <body>
@@ -31,8 +32,10 @@
             <input type="button" id="saveButton" value="Save">
             <input type="button" id="editButton" value="Edit">
             <div id="errorDiv">
-                You have to fill out the whole matrix before saving!
+                Matrix is not correctly filled. Every input field needs to
+                contain exactly one alphanumeric character.
             </div>
+            <div id="successDiv">Matrix successfully saved!</div>
         </div>
     </body>
 

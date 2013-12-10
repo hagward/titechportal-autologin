@@ -1,3 +1,8 @@
+// Creates a new table element with the specified number of rows and columns
+// and inserts it into the document. The first row and column contains headers
+// displaying "A B C..." and "1 2 3..." respectively, and the rest of the cells
+// contains input elements. Finally, it returns a list of the input elements
+// (in reverse order).
 function createInputTable(table, rows, cols) {
     var inputs = [];
 
@@ -30,9 +35,11 @@ function createInputTable(table, rows, cols) {
     return inputs;
 }
 
+// Checks if all the input elements in the specified list are filled properly,
+// i.e. contains exactly one alphanumeric character.
 function allFilled(inputs) {
     for (var i = 0; i < inputs.length; i++)
-        if (inputs[i].value.length == 0)
+        if (inputs[i].value.length != 1)
             return false;
     return true;
 }
@@ -42,9 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var saveButton = document.getElementById('saveButton');
     var editButton = document.getElementById('editButton');
     var errorDiv = document.getElementById('errorDiv');
+    var successDiv = document.getElementById('successDiv');
 
     var inputs = createInputTable(matrixTable, 7, 10, false);
 
+    // List representation of the login matrix.
     var m;
 
     chrome.storage.sync.get('loginMatrix', function (result) {
@@ -54,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputs[i].disabled = true;
                 inputs[i].value = '*';
             }
-
             saveButton.disabled = true;
         } else {
             inputs[inputs.length - 1].focus();
@@ -63,10 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     saveButton.addEventListener('click', function () {
         if (!allFilled(inputs)) {
-            errorDiv.style.visibility = 'visible';
+            errorDiv.style.display = 'block';
             return;
         } else {
-            errorDiv.style.visibility = 'hidden';
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'block';
         }
 
         // Reset the matrix before reading the new one.
@@ -102,6 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
         inputs[inputs.length - 1].focus();
     });
 
+    // This code is responsible for automatically selecting the next input
+    // element after the user has filled in one.
     document.onkeypress = function(e) {
         var kc = e.keyCode || e.which;
         var elem = document.activeElement;
