@@ -3,7 +3,7 @@
 
     "name": "Titech Portal Auto-login",
     "description": "No more tedious matrix lookups!",
-    "version": "0.1",
+    "version": "0.1.0.1",
     "homepage_url": "https://github.com/hagward/titechportal-autologin",
 
     "options_page": "options.html",

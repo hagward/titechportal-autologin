@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    if (!m) editButton.disabled = true;
+
     saveButton.addEventListener('click', function () {
         if (!allFilled(inputs)) {
             errorDiv.style.display = 'block';
