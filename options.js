@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.storage.sync.get('loginMatrix', function (result) {
         m = result.loginMatrix;
+        console.log(m);
         if (m) {
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].disabled = true;
@@ -66,14 +67,14 @@ document.addEventListener('DOMContentLoaded', function () {
             saveButton.disabled = true;
         } else {
             inputs[inputs.length - 1].focus();
+            editButton.disabled = true;
         }
     });
-
-    if (!m) editButton.disabled = true;
 
     saveButton.addEventListener('click', function () {
         if (!allFilled(inputs)) {
             errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
             return;
         } else {
             errorDiv.style.display = 'none';
@@ -98,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     editButton.addEventListener('click', function () {
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].disabled = !inputs[i].disabled;
             inputs[i].value = (inputs[i].disabled)
