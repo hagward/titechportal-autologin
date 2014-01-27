@@ -15,13 +15,12 @@ it, will automatically fill in the login inputs.
 ## FAQ
 
 <dl>
-  <dt>Will this extension steal my login information?</dt>
+  <dt>What happens to my login information?</dt>
   <dd>
-    No. The login matrix is only saved to your personal Chrome storage.
-    If sync is turned on for this extension then it will sync with your other
-    Chrome devices, otherwise the matrix information will only reside in the
-    local Chrome storage. Also, saving a new matrix will clear the previous saved
-    one.
+    The login matrix is only saved to one's personal Chrome storage. If sync is
+    turned on for this extension then the information will sync with other
+    connected Chrome devices, otherwise it will only reside in the local Chrome
+    storage. Furthermore, saving a new matrix will clear the previous saved one.
   </dd>
 </dl>
 
