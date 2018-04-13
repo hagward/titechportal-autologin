@@ -2,9 +2,9 @@ var regex = /CC\"\>\[([A-Z]){1},([0-9]){1}\]/g;
 var source = document.getElementsByTagName('body')[0].innerHTML;
 
 var inputs = [
-    document.getElementsByName('message3')[0],
     document.getElementsByName('message4')[0],
-    document.getElementsByName('message5')[0]
+    document.getElementsByName('message5')[0],
+    document.getElementsByName('message6')[0]
 ];
 
 if (inputs[0] && inputs[1] && inputs[2]) {
