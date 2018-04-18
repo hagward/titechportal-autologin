@@ -1,8 +1,7 @@
 // Creates a new table element with the specified number of rows and columns
 // and inserts it into the document. The first row and column contains headers
 // displaying "A B C..." and "1 2 3..." respectively, and the rest of the cells
-// contains input elements. Finally, it returns a list of the input elements
-// (in reverse order).
+// contains input elements. Finally, it returns a list of the input elements.
 function createInputTable(table, rows, cols) {
     var inputs = [];
 
@@ -13,18 +12,18 @@ function createInputTable(table, rows, cols) {
             var elem = document.createTextNode(' ');
 
             // Top letter header.
-            if (i == rows && j != cols)
-                elem = document.createTextNode(String.fromCharCode(74 - j));
+            if (i == 0 && j != 0) {
+                elem = document.createTextNode(String.fromCharCode(64 + j));
 
             // Left number header.
-            else if (i != rows && j == cols)
-                elem = document.createTextNode(7 - i);
+            } else if (i != 0 && j == 0) {
+                elem = document.createTextNode(i);
 
             // Input field.
-            else if (j != cols) {
+            } else if (j != 0) {
                 elem = document.createElement('input');
                 elem.type = 'text';
-                elem.tabIndex = cols * rows - (cols * i + j);
+                elem.tabIndex = (i - 1) * cols + j;
                 inputs.push(elem);
             }
 
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.storage.sync.get('loginMatrix', function (result) {
         m = result.loginMatrix;
-        console.log(m);
         if (m) {
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].disabled = true;
@@ -66,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             saveButton.disabled = true;
         } else {
-            inputs[inputs.length - 1].focus();
+            inputs[0].focus();
             editButton.disabled = true;
         }
     });
@@ -85,14 +83,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // todo: don't reset
         m = [];
 
-        for (var i = inputs.length - 1; i >= 0; i--) {
+        for (var i = 0; i < inputs.length; i++) {
             m.push(inputs[i].value);
             inputs[i].disabled = true;
             inputs[i].value = '*';
         }
 
         chrome.storage.sync.set({'loginMatrix': m}, null);
-        
+
         saveButton.disabled = true;
         editButton.disabled = false;
         editButton.value = 'Edit';
@@ -114,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ? 'Edit'
             : 'Cancel';
 
-        inputs[inputs.length - 1].focus();
+        inputs[0].focus();
     });
 
     // This code is responsible for automatically selecting the next input
@@ -135,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // End of table reached.
             if (elem.parentNode.nextSibling == null)
                 return;
-            
+
             // Set elem to the first input cell in the next row.
             elem = elem.parentNode.nextSibling.firstChild;
         }
@@ -143,4 +141,3 @@ document.addEventListener('DOMContentLoaded', function () {
         elem.nextSibling.firstChild.focus();
     }
 });
-
