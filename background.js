@@ -21,7 +21,9 @@ chrome.pageAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(tab.id, {
         code: 'var m = ' + JSON.stringify(m)
     }, function() {
-        chrome.tabs.executeScript(tab.id, {file: 'content_script.js'});
+        chrome.tabs.executeScript(tab.id, {file: 'jquery-3.3.1.slim.min.js'}, function() {
+            chrome.tabs.executeScript(tab.id, {file: 'content_script.js'});
+        });
     });
 });
 
