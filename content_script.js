@@ -1,11 +1,7 @@
 var regex = /CC\"\>\[([A-Z]){1},([0-9]){1}\]/g;
 var source = document.getElementsByTagName('body')[0].innerHTML;
 
-var inputs = [
-    document.getElementsByName('message4')[0],
-    document.getElementsByName('message5')[0],
-    document.getElementsByName('message6')[0]
-];
+var inputs = document.querySelectorAll('input[name^="message"][type="password"]');
 
 if (inputs[0] && inputs[1] && inputs[2]) {
     var i = 0;
