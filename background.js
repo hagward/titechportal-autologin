@@ -1,32 +1,54 @@
-// todo: check content as well as url
-var urlIdent = 'https://portal.nap.gsic.titech.ac.jp/GetAccess/Login'
-             + '?Template=idg_key&AUTHMETHOD=IG';
+function autoFillForm(loginMatrix) {
+    const regex = /CC\"\>\[([A-Z]){1},([0-9]){1}\]/g;
+    const source = document.getElementsByTagName('body')[0].innerHTML;
+    const inputs = document.querySelectorAll('input[name^="message"][type="password"]');
+    const submit = document.getElementsByName('OK')[0];
 
-// List representation of the login matrix.
-var m;
+    if (inputs[0] && inputs[1] && inputs[2]) {
+        let i = 0;
+        let found;
 
-chrome.storage.sync.get('loginMatrix', function (result) {
-    m = result.loginMatrix;
-});
+        while (i < 3 && (found = regex.exec(source)) !== null) {
+            const x = found[1].charCodeAt(0) - 65;
+            const y = parseInt(found[2], 10) - 1;
 
-chrome.storage.onChanged.addListener(function (changes, namespace) {
-    // For now there's only one data structure that is stored, so we can be
-    // quite sure that that's the modified one.
-    m = changes.loginMatrix.newValue;
-});
+            if (x < 10 && x >= 0 && y < 7 && y >= 0) {
+                inputs[i].value = loginMatrix[y*10 + x];
+            }
 
-chrome.pageAction.onClicked.addListener(function (tab) {
-    if (!m) return;
+            i++;
+        }
 
-    chrome.tabs.executeScript(tab.id, {
-        code: 'var m = ' + JSON.stringify(m)
-    }, function() {
-        chrome.tabs.executeScript(tab.id, {file: 'content_script.js'});
+        if (submit) {
+            submit.click();
+        }
+    }
+}
+
+chrome.action.onClicked.addListener((tab) => {
+    chrome.storage.sync.get('loginMatrix', (result) => {
+        if (!result.loginMatrix) return;
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: autoFillForm,
+            args: [result.loginMatrix]
+        });
     });
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (tab.url.lastIndexOf(urlIdent, 0) === 0)
-        chrome.pageAction.show(tabId);
-});
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.action.disable();
 
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
+        const rule = {
+            conditions: [
+                new chrome.declarativeContent.PageStateMatcher({
+                    pageUrl: { hostEquals: 'portal.nap.gsic.titech.ac.jp', schemes: ['https'] },
+                    css: ['input[name^="message"][type="password"]']
+                })
+            ],
+            actions: [new chrome.declarativeContent.ShowAction()],
+        };
+        chrome.declarativeContent.onPageChanged.addRules([rule]);
+    });
+});
