@@ -4,42 +4,39 @@
         <title>Titech Portal Auto-login options</title>
         <meta charset="UTF-8">
         <style>
-        body, input {
-            font-family: Segoe UI, Tahoma, sans-serif;
-            font-size: 1.1em;
-        }
-        table { margin: 20px auto; }
-        td:first-child { padding-right: 8px; }
-        input[type="text"] { width: 1.1em; }
-        h1 { border-bottom: 1px solid gray; }
+            body, input { font: 1.2rem sans-serif; }
+            table { margin: 1rem auto; }
+            th, input[type="text"] { width: 1.2rem; }
 
-        #centeringDiv {
-            text-align: center;
-        }
-        #errorDiv, #successDiv {
-            font-style: italic;
-            display: none;
-        }
-        #errorDiv { color: red; }
-        #successDiv { color: green; }
+            .centered {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 2rem;
+            }
+            .msg {
+                display: none;
+                font-style: italic;
+                margin-top: 1rem;
+            }
+            .success { color: #2ECC40; }
+            .error { color: #FF4136; }
         </style>
     </head>
     <body>
-        <div id="centeringDiv">
+        <div class="centered">
             <h1>Titech Portal Auto-login</h1>
-            <table id="matrixTable">
-            </table>
-            <input type="button" id="saveButton" value="Save">
-            <input type="button" id="editButton" value="Edit">
-            <div id="errorDiv">
+            <table id="matrixTable"></table>
+            <div>
+                <input type="button" id="saveButton" value="Save">
+                <input type="button" id="editButton" value="Edit">
+            </div>
+            <div id="errorDiv" class="msg error">
                 Matrix is not correctly filled. Every input field needs to
                 contain exactly one alphanumeric character.
             </div>
-            <div id="successDiv">Matrix successfully saved!</div>
+            <div id="successDiv" class="msg success">Matrix successfully saved!</div>
         </div>
     </body>
-
     <script src="options.js"></script>
-
 </html>
-
